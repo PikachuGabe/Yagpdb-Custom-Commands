@@ -4,11 +4,12 @@ Trigger Type: Regex
 
 Description: Automatically temporarily bans someone who sends a message in the channel this is set to run in. To prevent accidental bans, this custom command requires setup before it will do anything.
 
-Note: Please configure the variables after pasting the code into your control panel and also make sure to limit this to a channel!
+Note: Please configure the variables after pasting the code into your control panel and limit where this runs to a single channel!
 */}}
-{{$configured := true}}
+{{$configured := false}}
 {{$RoleBypass := cslice ""}}
 {{$UserBypass := cslice ""}}
+{{/* Do not edit anything below this unless you know what you are doing! */}}
 {{$user := .Message.Author}}
 
 {{if $configured}} {{/* Configuration check. */}}
