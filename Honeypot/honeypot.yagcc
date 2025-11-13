@@ -7,7 +7,7 @@ Description: Automatically temporarily bans someone who sends a message in the c
 Note: Please configure the variables after pasting the code into your control panel and limit where this runs to a single channel!
 */}}
 {{$configured := false}}
-{{$RoleBypass := cslice ""}}
+{{$RoleBypass := cslice ""}} {{/* To add bypasses, simply add a new set of quotes and put an ID in it. Each set of quotes must be seperated with a space. */}}
 {{$UserBypass := cslice ""}}
 {{/* Do not edit anything below this unless you know what you are doing! */}}
 {{$user := .Message.Author}}
