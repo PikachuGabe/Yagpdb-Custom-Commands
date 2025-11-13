@@ -1,0 +1,37 @@
+{{/*
+Trigger: .*
+Trigger Type: Regex
+
+Description: Automatically temporarily bans someone who sends a message in the channel this is set to run in. To prevent accidental bans, this custom command requires setup before it will do anything.
+
+Note: Please configure the variables after pasting the code into your control panel and also make sure to limit this to a channel!
+*/}}
+{{$configured := true}}
+{{$RoleBypass := cslice ""}}
+{{$UserBypass := cslice ""}}
+{{$user := .Message.Author}}
+
+{{if $configured}} {{/* Configuration check. */}}
+    {{if .User.Bot}} {{/* Prevents this from running on bots. Don't want to accidentally temp ban any of the server's bots. */}}
+        {{return}}
+    {{end}}
+    {{range $index, $RoleID := $RoleBypass}} {{/* Checks if the user has one of the bypass roles. */}}
+        {{if hasRole $RoleID}}
+            {{return}}
+        {{end}}
+    {{end}}
+    {{range $index, $UserID := $UserBypass}} {{/* Checks if the user is on the list of bypass users. */}}
+        {{if eq (print $user) (print $UserID)}}
+            {{return}}
+        {{end}}
+    {{end}}
+    {{try}}
+        {{execAdmin "ban" $user "1d" "Temporarily banned for 1 day for being a suspected hacked account." "-ddays" "1"}}
+    {{catch}}
+    {{end}}
+{{else}}
+    {{try}}
+	{{sendMessage nil "Honeypot is not configured yet!"}}
+    {{catch}}
+    {{end}}
+{{end}}
